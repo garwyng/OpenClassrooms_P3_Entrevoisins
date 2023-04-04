@@ -1,7 +1,6 @@
 package com.openclassrooms.entrevoisins.ui.neighbour_list;
 
 
-import static com.openclassrooms.entrevoisins.service.DummyNeighbourGenerator.getFavorisNeighbour;
 
 import android.content.Intent;
 import android.os.Bundle;
@@ -15,14 +14,16 @@ import androidx.appcompat.app.AppCompatActivity;
 import com.bumptech.glide.Glide;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import com.openclassrooms.entrevoisins.R;
+import com.openclassrooms.entrevoisins.di.DI;
 import com.openclassrooms.entrevoisins.model.Neighbour;
-
-import java.lang.annotation.Annotation;
+import com.openclassrooms.entrevoisins.service.NeighbourApiService;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
 
-public final class DetailActivity extends AppCompatActivity implements BindView {
+public final class DetailActivity extends AppCompatActivity {
+
+    NeighbourApiService service;
 
     @BindView(R.id.imageViewPhoto)
     ImageView mphoto;
@@ -59,42 +60,28 @@ public final class DetailActivity extends AppCompatActivity implements BindView 
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_detail);
         ButterKnife.bind(this);
-
+        service= DI.getNeighbourApiService();
 
     Intent intent = getIntent();
 
     Neighbour neighbour = intent.getParcelableExtra("NEIGHBOUR");
 
-        if (intent != null) {
 
-            if (neighbour != null) {
-                /**
-                 * get neighbour informations from intent
-                 */
-                String neighbourAddress = neighbour.getAddress();
-                String neighbourName = neighbour.getName();
-                String neighbourPhone = neighbour.getPhoneNumber();
-                String neighbourAboutMe = neighbour.getAboutMe();
-                String neighbourAvatarUrl = neighbour.getAvatarUrl();
-
-                /**
+                 /**
                  * set the informations to show to the user
                  */
-
-                mNeighbourName2.setText(neighbourName);
-                mNeighbourName1.setText(neighbourName);
-                mNeighbourAddress.setText(neighbourAddress);
-                mNeighbourPhoneNumber.setText(neighbourPhone);
+                mNeighbourName2.setText(neighbour.getName());
+                mNeighbourName1.setText(neighbour.getName());
+                mNeighbourAddress.setText(neighbour.getAddress());
+                mNeighbourPhoneNumber.setText(neighbour.getPhoneNumber());
                 Glide.with(mphoto.getContext())
-                        .load(neighbourAvatarUrl)
+                        .load(neighbour.getAvatarUrl())
                         .fitCenter()
                         .into(mphoto);
-                mtextViewAboutMe.setText(neighbourAboutMe);
-                String textSocialProfil = "www.facebook/" + neighbourName;
+                mtextViewAboutMe.setText(neighbour.getAboutMe());
+                String textSocialProfil = "www.facebook/" + neighbour.getName();
                 mneighbourSocialProfil.setText(textSocialProfil);
 
-            }
-        }
 
         mbuttonBack.setOnClickListener(new View.OnClickListener() {
             public void onClick(View v) {
@@ -105,31 +92,11 @@ public final class DetailActivity extends AppCompatActivity implements BindView 
         mfloatingActionButtonFavoris.setOnClickListener(new View.OnClickListener() {
             public void onClick(View v) {
 
-                if (getFavorisNeighbour().contains(neighbour)) {
-                    getFavorisNeighbour().remove(neighbour);
-                    ;
-                } else {
-                    getFavorisNeighbour().add(neighbour);
-                    ;
-                }
+                service.manageFavoris(neighbour);
+
             }
         });
 
     }
 
-    /**
-     * @return
-     */
-    @Override
-    public int value() {
-        return 0;
-    }
-
-    /**
-     * @return
-     */
-    @Override
-    public Class<? extends Annotation> annotationType() {
-        return null;
-    }
 }
