@@ -4,9 +4,7 @@ import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentManager;
 import androidx.fragment.app.FragmentPagerAdapter;
 
-
 public class ListNeighbourPagerAdapter extends FragmentPagerAdapter {
-
     public ListNeighbourPagerAdapter(FragmentManager fm) {
         super(fm);
     }
@@ -16,14 +14,9 @@ public class ListNeighbourPagerAdapter extends FragmentPagerAdapter {
      */
     @Override
     public Fragment getItem(int position) {
-        switch (position){
-            case 0:
-                return NeighbourFragment.newInstance();
-            case 1:
-                return FavorisNeighbourFragment.newInstance();
-            default:
-                return NeighbourFragment.newInstance();
-        }}
+
+            return NeighbourFragment.newInstance(position);
+    }
 
     /**
      * @return the number of pages
@@ -32,4 +25,5 @@ public class ListNeighbourPagerAdapter extends FragmentPagerAdapter {
     public int getCount() {
         return 2;
     }
+
 }

@@ -185,14 +185,16 @@
         android:layout_marginEnd="16dp"
         android:clickable="true"
         android:contentDescription="@android:string/untitled"
-        android:focusable="true"
-        android:focusableInTouchMode="true"
+        android:focusable="auto"
+        android:focusableInTouchMode="false"
+        android:foreground="@drawable/ic_star_yellow_24dp"
         android:src="@drawable/ic_star_white_24dp"
-        app:backgroundTint="@android:color/background_light"
+        app:backgroundTint="#FFFFFF"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="1.0"
         app:layout_constraintStart_toEndOf="@+id/textViewNeighbourName1"
-        app:layout_constraintTop_toTopOf="parent" />
+        app:layout_constraintTop_toTopOf="parent"
+        app:rippleColor="#FFFFFF" />
 
     <RelativeLayout
         android:layout_width="353dp"

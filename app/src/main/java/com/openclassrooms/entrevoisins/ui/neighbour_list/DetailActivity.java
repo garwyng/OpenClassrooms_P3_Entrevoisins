@@ -1,7 +1,6 @@
 package com.openclassrooms.entrevoisins.ui.neighbour_list;
 
 
-
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
@@ -64,7 +63,7 @@ public final class DetailActivity extends AppCompatActivity {
 
     Intent intent = getIntent();
 
-    Neighbour neighbour = intent.getParcelableExtra("NEIGHBOUR");
+    Neighbour neighbour = intent.getParcelableExtra("neighbour");
 
 
                  /**
@@ -91,8 +90,7 @@ public final class DetailActivity extends AppCompatActivity {
 
         mfloatingActionButtonFavoris.setOnClickListener(new View.OnClickListener() {
             public void onClick(View v) {
-
-                service.manageFavoris(neighbour);
+                service.manageFavory(neighbour);
 
             }
         });

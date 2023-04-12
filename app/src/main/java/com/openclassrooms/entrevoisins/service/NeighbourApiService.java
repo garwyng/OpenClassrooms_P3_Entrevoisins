@@ -28,8 +28,8 @@ public interface NeighbourApiService {
      */
     void createNeighbour(Neighbour neighbour);
 
-    void manageFavoris(Neighbour neighbour);
+    void manageFavory(Neighbour neighbour);
 
-     List<Neighbour> getFavorisNeighbour();
+     List<Neighbour> getFavoryNeighbour();
+    }
 
-}
