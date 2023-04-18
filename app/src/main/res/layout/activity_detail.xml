@@ -69,7 +69,7 @@
                 android:outlineAmbientShadowColor="@color/cardview_light_background"
                 android:padding="10dp"
                 android:shadowColor="@android:color/darker_gray"
-                android:text="NeighbourName2"
+                android:text="Neighbour Name"
                 android:textColor="@android:color/black"
                 android:textSize="28sp" />
         </LinearLayout>
@@ -167,7 +167,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginBottom="16dp"
-        android:text="Name1"
+        android:text="Neighbour Name"
         android:textColor="@android:color/white"
         android:textSize="36dp"
         app:layout_constraintBottom_toBottomOf="@+id/imageViewPhoto"

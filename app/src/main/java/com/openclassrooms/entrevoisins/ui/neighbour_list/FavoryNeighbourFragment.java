@@ -29,8 +29,9 @@ public class FavoryNeighbourFragment extends Fragment {
     private List<Neighbour> mNeighbours;
     private RecyclerView mRecyclerView;
 
-     /**
+    /**
      * Create and return a new instance
+     *
      * @return @{@link FavoryNeighbourFragment}
      */
     public static FavoryNeighbourFragment newInstance() {
@@ -61,12 +62,12 @@ public class FavoryNeighbourFragment extends Fragment {
      */
 
     private void initList() {
-            mNeighbours = mApiService.getFavoryNeighbour();
-            mRecyclerView.setAdapter(new MyNeighbourRecyclerViewAdapter(mNeighbours));
+        mNeighbours = mApiService.getFavoryNeighbour();
+        mRecyclerView.setAdapter(new MyNeighbourRecyclerViewAdapter(mNeighbours));
     }
 
 
-        @Override
+    @Override
     public void onResume() {
         super.onResume();
         initList();
@@ -86,6 +87,7 @@ public class FavoryNeighbourFragment extends Fragment {
 
     /**
      * Fired if the user clicks on a delete button
+     *
      * @param event
      */
     @Subscribe

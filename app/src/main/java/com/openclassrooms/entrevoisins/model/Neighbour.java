@@ -12,26 +12,45 @@ import java.util.Objects;
  */
 public class Neighbour implements Parcelable {
 
-    /** Identifier */
+    public static final Creator<Neighbour> CREATOR = new Creator<Neighbour>() {
+        @Override
+        public Neighbour createFromParcel(Parcel in) {
+            return new Neighbour(in);
+        }
+
+        @Override
+        public Neighbour[] newArray(int size) {
+            return new Neighbour[size];
+        }
+    };
+    /**
+     * Identifier
+     */
     private long id;
-
-    /** Full name */
+    /**
+     * Full name
+     */
     private String name;
-
-    /** Avatar */
+    /**
+     * Avatar
+     */
     private String avatarUrl;
-
-    /** Adress */
+    /**
+     * Adress
+     */
     private String address;
-
-    /** Phone number */
+    /**
+     * Phone number
+     */
     private String phoneNumber;
-
-    /** About me */
+    /**
+     * About me
+     */
     private String aboutMe;
 
     /**
      * Constructor
+     *
      * @param id
      * @param name
      * @param avatarUrl
@@ -54,18 +73,6 @@ public class Neighbour implements Parcelable {
         phoneNumber = in.readString();
         aboutMe = in.readString();
     }
-
-    public static final Creator<Neighbour> CREATOR = new Creator<Neighbour>() {
-        @Override
-        public Neighbour createFromParcel(Parcel in) {
-            return new Neighbour(in);
-        }
-
-        @Override
-        public Neighbour[] newArray(int size) {
-            return new Neighbour[size];
-        }
-    };
 
     public long getId() {
         return id;

@@ -20,7 +20,7 @@ import com.openclassrooms.entrevoisins.service.NeighbourApiService;
 import butterknife.BindView;
 import butterknife.ButterKnife;
 
-public final class DetailActivity extends AppCompatActivity {
+public class DetailActivity extends AppCompatActivity {
 
     NeighbourApiService service;
 
@@ -37,7 +37,7 @@ public final class DetailActivity extends AppCompatActivity {
     TextView mNeighbourName1;
 
     @BindView(R.id.textViewNeighbourName2)
-    TextView mNeighbourName2 ;
+    TextView mNeighbourName2;
 
     @BindView(R.id.textViewAddress)
     TextView mNeighbourAddress;
@@ -59,27 +59,27 @@ public final class DetailActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_detail);
         ButterKnife.bind(this);
-        service= DI.getNeighbourApiService();
+        service = DI.getNeighbourApiService();
 
-    Intent intent = getIntent();
+        Intent intent = getIntent();
 
-    Neighbour neighbour = intent.getParcelableExtra("neighbour");
+        Neighbour neighbour = intent.getParcelableExtra("neighbour");
 
 
-                 /**
-                 * set the informations to show to the user
-                 */
-                mNeighbourName2.setText(neighbour.getName());
-                mNeighbourName1.setText(neighbour.getName());
-                mNeighbourAddress.setText(neighbour.getAddress());
-                mNeighbourPhoneNumber.setText(neighbour.getPhoneNumber());
-                Glide.with(mphoto.getContext())
-                        .load(neighbour.getAvatarUrl())
-                        .fitCenter()
-                        .into(mphoto);
-                mtextViewAboutMe.setText(neighbour.getAboutMe());
-                String textSocialProfil = "www.facebook/" + neighbour.getName();
-                mneighbourSocialProfil.setText(textSocialProfil);
+        /**
+         * set the informations to show to the user
+         */
+        mNeighbourName2.setText(neighbour.getName());
+        mNeighbourName1.setText(neighbour.getName());
+        mNeighbourAddress.setText(neighbour.getAddress());
+        mNeighbourPhoneNumber.setText(neighbour.getPhoneNumber());
+        Glide.with(mphoto.getContext())
+                .load(neighbour.getAvatarUrl())
+                .fitCenter()
+                .into(mphoto);
+        mtextViewAboutMe.setText(neighbour.getAboutMe());
+        String textSocialProfil = "www.facebook/" + neighbour.getName();
+        mneighbourSocialProfil.setText(textSocialProfil);
 
 
         mbuttonBack.setOnClickListener(new View.OnClickListener() {

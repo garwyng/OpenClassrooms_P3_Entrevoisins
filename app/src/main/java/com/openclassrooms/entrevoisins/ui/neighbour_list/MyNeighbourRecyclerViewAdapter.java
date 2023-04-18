@@ -32,15 +32,6 @@ import butterknife.ButterKnife;
 
 public class MyNeighbourRecyclerViewAdapter extends RecyclerView.Adapter<MyNeighbourRecyclerViewAdapter.ViewHolder> implements Parcelable {
 
-    List<Neighbour> mNeighbours;
-
-    public MyNeighbourRecyclerViewAdapter(List<Neighbour> items) {
-        mNeighbours = items;
-    }
-
-    protected MyNeighbourRecyclerViewAdapter(Parcel in) {
-    }
-
     public static final Creator<MyNeighbourRecyclerViewAdapter> CREATOR = new Creator<MyNeighbourRecyclerViewAdapter>() {
         @Override
         public MyNeighbourRecyclerViewAdapter createFromParcel(Parcel in) {
@@ -52,6 +43,14 @@ public class MyNeighbourRecyclerViewAdapter extends RecyclerView.Adapter<MyNeigh
             return new MyNeighbourRecyclerViewAdapter[size];
         }
     };
+    List<Neighbour> mNeighbours;
+
+    public MyNeighbourRecyclerViewAdapter(List<Neighbour> items) {
+        mNeighbours = items;
+    }
+
+    protected MyNeighbourRecyclerViewAdapter(Parcel in) {
+    }
 
     @Override
     public ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
