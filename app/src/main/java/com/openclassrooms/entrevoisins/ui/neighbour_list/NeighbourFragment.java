@@ -49,7 +49,6 @@ public class NeighbourFragment extends Fragment {
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         mApiService = DI.getNeighbourApiService();
-
     }
 
     @Override
@@ -62,22 +61,24 @@ public class NeighbourFragment extends Fragment {
         mRecyclerView.setLayoutManager(new LinearLayoutManager(context));
         mRecyclerView.addItemDecoration(new DividerItemDecoration(getContext(), DividerItemDecoration.VERTICAL));
         return view;
+
     }
+
 
     /**
      * Init the List of neighbours
      */
-
     private void initList() {
         Log.d("position", isFavorite + "");
         if (isFavorite) {
             mNeighbours = mApiService.getFavoryNeighbour();
-        } else {
+                       } else {
             mNeighbours = mApiService.getNeighbours();
+
         }
         mRecyclerView.setAdapter(new MyNeighbourRecyclerViewAdapter(mNeighbours));
+        }
 
-    }
 
     @Override
     public void onResume() {

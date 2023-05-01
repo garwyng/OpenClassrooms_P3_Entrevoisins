@@ -23,8 +23,8 @@
 
     <ImageButton
         android:id="@+id/imageButtonBack"
-        android:layout_width="90dp"
-        android:layout_height="55dp"
+        android:layout_width="64dp"
+        android:layout_height="58dp"
         android:layout_marginTop="16dp"
         android:adjustViewBounds="true"
         android:alpha="0.9"
@@ -71,7 +71,7 @@
                 android:shadowColor="@android:color/darker_gray"
                 android:text="Neighbour Name"
                 android:textColor="@android:color/black"
-                android:textSize="28sp" />
+                android:textSize="22sp" />
         </LinearLayout>
 
         <LinearLayout
@@ -184,17 +184,16 @@
         android:layout_marginTop="220dp"
         android:layout_marginEnd="16dp"
         android:clickable="true"
-        android:contentDescription="@android:string/untitled"
+        android:contentDescription="@string/fab_favorites"
         android:focusable="auto"
         android:focusableInTouchMode="false"
-        android:foreground="@drawable/ic_star_yellow_24dp"
-        android:src="@drawable/ic_star_white_24dp"
-        app:backgroundTint="#FFFFFF"
+        android:src="@drawable/ic_star_border_white_24dp"
+        app:backgroundTint="#F6E5C1"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="1.0"
         app:layout_constraintStart_toEndOf="@+id/textViewNeighbourName1"
         app:layout_constraintTop_toTopOf="parent"
-        app:rippleColor="#FFFFFF" />
+        app:rippleColor="#FAF6F6" />
 
     <RelativeLayout
         android:layout_width="353dp"

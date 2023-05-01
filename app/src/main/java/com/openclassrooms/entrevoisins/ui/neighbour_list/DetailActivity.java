@@ -87,10 +87,13 @@ public class DetailActivity extends AppCompatActivity {
                 finish();
             }
         });
-
+        if(service.getFavoryNeighbour().contains(neighbour)){
+            mfloatingActionButtonFavoris.setImageResource(R.drawable.ic_star_yellow_24dp);
+            }
         mfloatingActionButtonFavoris.setOnClickListener(new View.OnClickListener() {
             public void onClick(View v) {
                 service.manageFavory(neighbour);
+                mfloatingActionButtonFavoris.setImageResource(R.drawable.ic_star_yellow_24dp);
 
             }
         });

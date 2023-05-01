@@ -32,7 +32,7 @@ import butterknife.ButterKnife;
 
 public class MyNeighbourRecyclerViewAdapter extends RecyclerView.Adapter<MyNeighbourRecyclerViewAdapter.ViewHolder> implements Parcelable {
 
-    public static final Creator<MyNeighbourRecyclerViewAdapter> CREATOR = new Creator<MyNeighbourRecyclerViewAdapter>() {
+    public static final Creator<MyNeighbourRecyclerViewAdapter> CREATOR = new Creator<>() {
         @Override
         public MyNeighbourRecyclerViewAdapter createFromParcel(Parcel in) {
             return new MyNeighbourRecyclerViewAdapter(in);
@@ -58,7 +58,6 @@ public class MyNeighbourRecyclerViewAdapter extends RecyclerView.Adapter<MyNeigh
                 .inflate(R.layout.itemview_neighbour, parent, false);
         return new ViewHolder(view);
     }
-
     @Override
     public void onBindViewHolder(final ViewHolder holder, int position) {
         Neighbour neighbour = mNeighbours.get(position);
@@ -67,14 +66,26 @@ public class MyNeighbourRecyclerViewAdapter extends RecyclerView.Adapter<MyNeigh
                 .load(neighbour.getAvatarUrl())
                 .apply(RequestOptions.circleCropTransform())
                 .into(holder.mNeighbourAvatar);
+        if (neighbour.isFavorite()) {
+            holder.mDeleteButton.setVisibility(View.GONE);
+        } else {
+            holder.mDeleteButton.setVisibility(View.VISIBLE);;
+        }
+
+
 
         holder.mDeleteButton.setOnClickListener(new View.OnClickListener() {
+
             @Override
             public void onClick(View v) {
                 EventBus.getDefault().post(new DeleteNeighbourEvent(neighbour));
             }
         });
-
+        if (neighbour.isFavorite()) {
+            holder.mDeleteButton.setVisibility(View.GONE);
+        } else {
+            holder.mDeleteButton.setVisibility(View.VISIBLE);;
+        }
         holder.itemView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -86,15 +97,10 @@ public class MyNeighbourRecyclerViewAdapter extends RecyclerView.Adapter<MyNeigh
             }
         });
     }
-
     @Override
     public int getItemCount() {
         return mNeighbours.size();
     }
-
-    /**
-     * @return
-     */
     @Override
     public int describeContents() {
         return 0;
@@ -109,7 +115,7 @@ public class MyNeighbourRecyclerViewAdapter extends RecyclerView.Adapter<MyNeigh
     public void writeToParcel(@NonNull Parcel dest, int flags) {
     }
 
-    public class ViewHolder extends RecyclerView.ViewHolder {
+    public static class ViewHolder extends RecyclerView.ViewHolder {
         @BindView(R.id.item_list_avatar)
         public ImageView mNeighbourAvatar;
         @BindView(R.id.item_list_name)
