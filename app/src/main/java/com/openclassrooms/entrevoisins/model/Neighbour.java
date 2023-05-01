@@ -47,7 +47,6 @@ public class Neighbour implements Parcelable {
      * About me
      */
     private String aboutMe;
-    private Boolean getIsFavorite;
 
     /**
      * Constructor
@@ -158,6 +157,5 @@ public class Neighbour implements Parcelable {
         dest.writeString(phoneNumber);
         dest.writeString(aboutMe);
     }
-    private Boolean isFavorite
 
 }
