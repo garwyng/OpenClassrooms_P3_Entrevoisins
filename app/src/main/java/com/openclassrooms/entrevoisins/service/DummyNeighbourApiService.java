@@ -46,7 +46,6 @@ public class DummyNeighbourApiService implements NeighbourApiService {
             favoritesNeighbours.remove(neighbour);
         } else {
             favoritesNeighbours.add(neighbour);
-
         }
     }
 

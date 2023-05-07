@@ -63,8 +63,6 @@ public class NeighbourFragment extends Fragment {
         return view;
 
     }
-
-
     /**
      * Init the List of neighbours
      */
@@ -78,26 +76,21 @@ public class NeighbourFragment extends Fragment {
         }
         mRecyclerView.setAdapter(new MyNeighbourRecyclerViewAdapter(mNeighbours,isFavorite));
         }
-
-
     @Override
     public void onResume() {
         super.onResume();
         initList();
     }
-
     @Override
     public void onStart() {
         super.onStart();
         EventBus.getDefault().register(this);
     }
-
     @Override
     public void onStop() {
         super.onStop();
         EventBus.getDefault().unregister(this);
     }
-
     /**
      * Fired if the user clicks on a delete button
      *
