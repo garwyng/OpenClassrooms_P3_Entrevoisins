@@ -1,11 +1,11 @@
 <resources>
     <string name="app_name">Entrevoisins</string>
-    <string name="tab_neighbour_title">My neighbours</string>
-    <string name="tab_favorites_title">Favorites</string>
-    <string name="activity_new_neighbour">New neighbour</string>
-    <string name="fab_favorites">Add to favorites list</string>
+    <string name="tab_neighbour_title">Mes voisins</string>
+    <string name="tab_favorites_title">Favoris</string>
+    <string name="activity_new_neighbour">Nouveau Voisin</string>
+    <string name="fab_favorites">Ajouter au favoris</string>
     <!-- TODO: Remove or change this placeholder text -->
-    <string name="hello_blank_fragment">Hello blank fragment</string>
-    <string name="delete_neighbour">delete Neighbour</string>
-    <string name="Neighbour_Name">Neighbour name</string>
+    <string name="hello_blank_fragment">Accueil</string>
+    <string name="delete_neighbour">Supprimer un voisin</string>
+    <string name="Neighbour_Name">Nom du voisin</string>
 </resources>

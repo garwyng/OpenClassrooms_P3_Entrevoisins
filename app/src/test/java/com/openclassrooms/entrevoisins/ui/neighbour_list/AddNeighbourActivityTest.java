@@ -1,4 +1,4 @@
-package com.openclassrooms.entrevoisins.service;
+package com.openclassrooms.entrevoisins.ui.neighbour_list;
 
 import static org.junit.Assert.assertTrue;
 
@@ -6,6 +6,7 @@ import androidx.test.filters.LargeTest;
 
 import com.openclassrooms.entrevoisins.di.DI;
 import com.openclassrooms.entrevoisins.model.Neighbour;
+import com.openclassrooms.entrevoisins.service.NeighbourApiService;
 
 import org.junit.Before;
 import org.junit.Test;

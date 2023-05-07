@@ -50,4 +50,20 @@ public class NeighbourServiceTest {
         List<Neighbour> neighbours = service.getNeighbours();
         service.createNeighbour(neighbour);
         assertTrue(neighbours.contains(neighbour));    }
+    @Test
+    public void manageFavory() {
+        List<Neighbour> neighbours = service.getNeighbours();
+        Neighbour neighbour = neighbours.get(0);
+        service.manageFavorite(neighbour);
+        assertTrue(service.getFavoritesNeighbours().contains(neighbour));
+        assertTrue(service.getNeighbours().contains(neighbour));
+    }
+
+    @Test
+    public void getFavoryNeighbour() {
+        List<Neighbour> favoritesNeighbours = service.getFavoritesNeighbours();
+        favoritesNeighbours.clear();
+        service.manageFavorite(service.getNeighbours().get(0));
+        assertTrue(service.getFavoritesNeighbours().contains(service.getNeighbours().get(0)));
+    }
 }

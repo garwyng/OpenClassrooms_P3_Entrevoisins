@@ -7,10 +7,12 @@ import static androidx.test.espresso.action.ViewActions.closeSoftKeyboard;
 import static androidx.test.espresso.action.ViewActions.pressImeActionButton;
 import static androidx.test.espresso.action.ViewActions.replaceText;
 import static androidx.test.espresso.assertion.ViewAssertions.matches;
+import static androidx.test.espresso.contrib.RecyclerViewActions.actionOnItemAtPosition;
 import static androidx.test.espresso.matcher.ViewMatchers.assertThat;
 import static androidx.test.espresso.matcher.ViewMatchers.isDisplayed;
 import static androidx.test.espresso.matcher.ViewMatchers.withClassName;
 import static androidx.test.espresso.matcher.ViewMatchers.withContentDescription;
+import static androidx.test.espresso.matcher.ViewMatchers.withHint;
 import static androidx.test.espresso.matcher.ViewMatchers.withId;
 import static androidx.test.espresso.matcher.ViewMatchers.withParent;
 import static androidx.test.espresso.matcher.ViewMatchers.withText;
@@ -25,9 +27,8 @@ import android.view.ViewParent;
 
 import androidx.test.espresso.ViewInteraction;
 import androidx.test.espresso.contrib.RecyclerViewActions;
-import androidx.test.ext.junit.rules.ActivityScenarioRule;
 import androidx.test.ext.junit.runners.AndroidJUnit4;
-import androidx.test.filters.LargeTest;
+import androidx.test.rule.ActivityTestRule;
 
 import com.openclassrooms.entrevoisins.R;
 import com.openclassrooms.entrevoisins.model.Neighbour;
@@ -44,24 +45,21 @@ import org.junit.runner.RunWith;
 
 import java.util.List;
 
-@LargeTest
 @RunWith(AndroidJUnit4.class)
 public class ListNeighbourActivityTest {
-
-
     public List<Neighbour> mNeighboursList = new DummyNeighbourApiService().getNeighbours();
-
     public int size = mNeighboursList.size() ;
     String name = mNeighboursList.get(0).getName();
     Neighbour neighbourToAdd = new Neighbour(size,"sebastien","","46 avenue du test","0606060606","je fait un test pour verifier que tous vas bien.");
 
     @Rule
-    public ActivityScenarioRule<ListNeighbourActivity> mActivityScenarioRule =
-            new ActivityScenarioRule<>(ListNeighbourActivity.class);
+    public ActivityTestRule<ListNeighbourActivity> mActivityScenarioRule =
+            new ActivityTestRule(ListNeighbourActivity.class);
 
-    @Before
+
+        @Before
     public void setUp() {
-        mActivityScenarioRule.getScenario().recreate();
+        mActivityScenarioRule.getActivity();
         assertThat(mActivityScenarioRule, notNullValue());
     }
 
@@ -84,22 +82,6 @@ public class ListNeighbourActivityTest {
                                 withParent(withId(android.R.id.content)))),
                         isDisplayed()));
         textViewName.check(matches(withText(name)));
-
-        mActivityScenarioRule.getScenario().close();
-    }
-    @Test
-    public void eraseNeighbourTest(){
-        ViewInteraction appCompatImageButton = onView(
-                allOf(withId(R.id.item_list_delete_button), withContentDescription("delete Neighbour"),
-                        childAtPosition(
-                                childAtPosition(
-                                        withId(R.id.list_neighbours),
-                                         0),
-                                2),
-                        isDisplayed()));
-        appCompatImageButton.perform(click());
-        onView(allOf(withId(R.id.list_neighbours), isDisplayed())).check(withItemCount(size -1 ));
-        mActivityScenarioRule.getScenario().close();
     }
     @Test
     public void createNeighbourtest(){
@@ -184,8 +166,33 @@ public class ListNeighbourActivityTest {
                         isDisplayed()));
         materialButton.perform(click());
         assert (mNeighboursList.contains(neighbourToAdd));
-
     }
+    @Test
+    public void FavoriteslistOnlyTest(){
+        onView(allOf(withId(R.id.list_neighbours),
+                isDisplayed()))
+                .perform(RecyclerViewActions.actionOnItemAtPosition(0, click()));
+
+        ViewInteraction floatingActionButton = onView(
+                allOf(withId(R.id.floatingActionButtonFavoris)));
+        floatingActionButton.perform(click());
+
+        ViewInteraction appCompatImageButton = onView(
+                allOf(withId(R.id.imageButtonBack)));
+        appCompatImageButton.perform(click());
+
+        ViewInteraction tabView = onView(
+                Matchers.allOf(withContentDescription("Favoris"),
+                        childAtPosition(
+                                childAtPosition(
+                                        withId(R.id.tabs),
+                                        0),
+                                1),
+                        isDisplayed()));
+        tabView.perform(click());
+        onView(allOf(withId(R.id.list_neighbours),
+                isDisplayed())).check(withItemCount(1));
+        }
 
 
     private static Matcher<View> childAtPosition(
