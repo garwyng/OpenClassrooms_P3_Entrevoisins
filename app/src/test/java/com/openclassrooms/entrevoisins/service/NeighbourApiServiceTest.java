@@ -8,7 +8,6 @@ import androidx.test.filters.LargeTest;
 
 import com.openclassrooms.entrevoisins.di.DI;
 import com.openclassrooms.entrevoisins.model.Neighbour;
-import com.openclassrooms.entrevoisins.ui.neighbour_list.ListNeighbourActivity;
 
 import org.hamcrest.collection.IsIterableContainingInAnyOrder;
 import org.junit.After;
@@ -58,16 +57,16 @@ public class NeighbourApiServiceTest {
     public void manageFavory() {
         List<Neighbour> neighbours = service.getNeighbours();
         Neighbour neighbour = neighbours.get(0);
-        service.manageFavory(neighbour);
-        assertTrue(service.getFavoryNeighbour().contains(neighbour));
+        service.manageFavorite(neighbour);
+        assertTrue(service.getFavoritesNeighbours().contains(neighbour));
         assertTrue(service.getNeighbours().contains(neighbour));
     }
 
     @Test
     public void getFavoryNeighbour() {
-        List<Neighbour> favoritesNeighbours = service.getFavoryNeighbour();
+        List<Neighbour> favoritesNeighbours = service.getFavoritesNeighbours();
         favoritesNeighbours.clear();
-        service.manageFavory(service.getNeighbours().get(0));
-        assertTrue(service.getFavoryNeighbour().contains(service.getNeighbours().get(0)));
+        service.manageFavorite(service.getNeighbours().get(0));
+        assertTrue(service.getFavoritesNeighbours().contains(service.getNeighbours().get(0)));
     }
 }

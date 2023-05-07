@@ -3,14 +3,21 @@ package com.openclassrooms.entrevoisins.ui.neighbour_list;
 
 import static androidx.test.espresso.Espresso.onView;
 import static androidx.test.espresso.action.ViewActions.click;
+import static androidx.test.espresso.action.ViewActions.closeSoftKeyboard;
+import static androidx.test.espresso.action.ViewActions.pressImeActionButton;
+import static androidx.test.espresso.action.ViewActions.replaceText;
 import static androidx.test.espresso.assertion.ViewAssertions.matches;
+import static androidx.test.espresso.matcher.ViewMatchers.assertThat;
 import static androidx.test.espresso.matcher.ViewMatchers.isDisplayed;
+import static androidx.test.espresso.matcher.ViewMatchers.withClassName;
 import static androidx.test.espresso.matcher.ViewMatchers.withContentDescription;
 import static androidx.test.espresso.matcher.ViewMatchers.withId;
 import static androidx.test.espresso.matcher.ViewMatchers.withParent;
 import static androidx.test.espresso.matcher.ViewMatchers.withText;
 import static com.openclassrooms.entrevoisins.utils.RecyclerViewItemCountAssertion.withItemCount;
-import static org.hamcrest.Matchers.allOf;
+import static org.hamcrest.Matchers.is;
+import static org.hamcrest.core.AllOf.allOf;
+import static org.hamcrest.core.IsNull.notNullValue;
 
 import android.view.View;
 import android.view.ViewGroup;
@@ -28,7 +35,9 @@ import com.openclassrooms.entrevoisins.service.DummyNeighbourApiService;
 
 import org.hamcrest.Description;
 import org.hamcrest.Matcher;
+import org.hamcrest.Matchers;
 import org.hamcrest.TypeSafeMatcher;
+import org.junit.Before;
 import org.junit.Rule;
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -44,13 +53,20 @@ public class ListNeighbourActivityTest {
 
     public int size = mNeighboursList.size() ;
     String name = mNeighboursList.get(0).getName();
+    Neighbour neighbourToAdd = new Neighbour(size,"sebastien","","46 avenue du test","0606060606","je fait un test pour verifier que tous vas bien.");
 
     @Rule
     public ActivityScenarioRule<ListNeighbourActivity> mActivityScenarioRule =
             new ActivityScenarioRule<>(ListNeighbourActivity.class);
 
+    @Before
+    public void setUp() {
+        mActivityScenarioRule.getScenario().recreate();
+        assertThat(mActivityScenarioRule, notNullValue());
+    }
+
     @Test
-    public void detailActivityStartWithSuccessTest() {
+    public void detailActivityTest() {
         onView(allOf(withId(R.id.list_neighbours),
                 isDisplayed()))
                 .perform(RecyclerViewActions.actionOnItemAtPosition(0, click()));
@@ -61,21 +77,14 @@ public class ListNeighbourActivityTest {
                                 withParent(withId(com.google.android.material.R.id.action_bar_container)))),
                         isDisplayed()));
         textView.check(matches(withText("Detail Neighbour")));
-        mActivityScenarioRule.getScenario().close();
-    }
 
-    @Test
-    public void detailNeighbourActivityTest(){
-                ViewInteraction v = onView(allOf(withId(R.id.list_neighbours),
-                isDisplayed()));
-                v.perform(RecyclerViewActions.actionOnItemAtPosition(0,click()));
-
-                ViewInteraction textView = onView(
+        ViewInteraction textViewName = onView(
                 allOf(withId(R.id.textViewNeighbourName1), withText(name),
                         withParent(allOf(withId(R.id.DetailActivityView),
                                 withParent(withId(android.R.id.content)))),
                         isDisplayed()));
-        textView.check(matches(withText(name)));
+        textViewName.check(matches(withText(name)));
+
         mActivityScenarioRule.getScenario().close();
     }
     @Test
@@ -85,18 +94,104 @@ public class ListNeighbourActivityTest {
                         childAtPosition(
                                 childAtPosition(
                                         withId(R.id.list_neighbours),
-                                         5),
+                                         0),
                                 2),
                         isDisplayed()));
         appCompatImageButton.perform(click());
-        ViewInteraction currentSize = onView(allOf(withId(R.id.list_neighbours), isDisplayed())).check(withItemCount(size -1 ));
+        onView(allOf(withId(R.id.list_neighbours), isDisplayed())).check(withItemCount(size -1 ));
         mActivityScenarioRule.getScenario().close();
     }
+    @Test
+    public void createNeighbourtest(){
+        onView(allOf(withId(R.id.add_neighbour))).perform(click());
+        ViewInteraction textInputEditText = onView(
+                Matchers.allOf(withId(R.id.name),
+                        childAtPosition(
+                                childAtPosition(
+                                        withId(R.id.nameLyt),
+                                        0),
+                                0),
+                        isDisplayed()));
+        textInputEditText.perform(replaceText("sebastien"), closeSoftKeyboard());
+
+        ViewInteraction textInputEditText2 = onView(
+                Matchers.allOf(withId(R.id.name), withText("sebastien"),
+                        childAtPosition(
+                                childAtPosition(
+                                        withId(R.id.nameLyt),
+                                        0),
+                                0),
+                        isDisplayed()));
+        textInputEditText2.perform(pressImeActionButton());
+
+        ViewInteraction textInputEditText3 = onView(
+                Matchers.allOf(withId(R.id.phoneNumber),
+                        childAtPosition(
+                                childAtPosition(
+                                        withId(R.id.phoneNumberLyt),
+                                        0),
+                                0),
+                        isDisplayed()));
+        textInputEditText3.perform(replaceText("0606060606"), closeSoftKeyboard());
+
+        ViewInteraction textInputEditText4 = onView(
+                Matchers.allOf(withId(R.id.phoneNumber), withText("0606060606"),
+                        childAtPosition(
+                                childAtPosition(
+                                        withId(R.id.phoneNumberLyt),
+                                        0),
+                                0),
+                        isDisplayed()));
+        textInputEditText4.perform(pressImeActionButton());
+
+        ViewInteraction textInputEditText5 = onView(
+                Matchers.allOf(withId(R.id.address),
+                        childAtPosition(
+                                childAtPosition(
+                                        withId(R.id.addressLyt),
+                                        0),
+                                0),
+                        isDisplayed()));
+        textInputEditText5.perform(replaceText("46 avenue du test"), closeSoftKeyboard());
+
+        ViewInteraction textInputEditText6 = onView(
+                Matchers.allOf(withId(R.id.address), withText("46 avenue du test"),
+                        childAtPosition(
+                                childAtPosition(
+                                        withId(R.id.addressLyt),
+                                        0),
+                                0),
+                        isDisplayed()));
+        textInputEditText6.perform(pressImeActionButton());
+
+        ViewInteraction textInputEditText7 = onView(
+                Matchers.allOf(withId(R.id.aboutMe),
+                        childAtPosition(
+                                childAtPosition(
+                                        withId(R.id.aboutMeLyt),
+                                        0),
+                                0),
+                        isDisplayed()));
+        textInputEditText7.perform(replaceText("je fait un test pour verifier que tous vas bien."), closeSoftKeyboard());
+
+        ViewInteraction materialButton = onView(
+                Matchers.allOf(withId(R.id.create), withText("Save"),
+                        childAtPosition(
+                                childAtPosition(
+                                        withClassName(is("androidx.constraintlayout.widget.ConstraintLayout")),
+                                        0),
+                                5),
+                        isDisplayed()));
+        materialButton.perform(click());
+        assert (mNeighboursList.contains(neighbourToAdd));
+
+    }
+
 
     private static Matcher<View> childAtPosition(
             final Matcher<View> parentMatcher, final int position) {
 
-        return new TypeSafeMatcher<View>() {
+        return new TypeSafeMatcher<>() {
             @Override
             public void describeTo(Description description) {
                 description.appendText("Child at position " + position + " in parent ");

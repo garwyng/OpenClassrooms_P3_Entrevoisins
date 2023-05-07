@@ -32,7 +32,7 @@ import butterknife.ButterKnife;
 
 public class MyNeighbourRecyclerViewAdapter extends RecyclerView.Adapter<MyNeighbourRecyclerViewAdapter.ViewHolder> implements Parcelable {
 
-    public static final Creator<MyNeighbourRecyclerViewAdapter> CREATOR = new Creator<>() {
+    public static final Creator<MyNeighbourRecyclerViewAdapter> CREATOR = new Creator<MyNeighbourRecyclerViewAdapter>() {
         @Override
         public MyNeighbourRecyclerViewAdapter createFromParcel(Parcel in) {
             return new MyNeighbourRecyclerViewAdapter(in);
@@ -43,9 +43,11 @@ public class MyNeighbourRecyclerViewAdapter extends RecyclerView.Adapter<MyNeigh
             return new MyNeighbourRecyclerViewAdapter[size];
         }
     };
+    private boolean isFavorite;
     List<Neighbour> mNeighbours;
 
-    public MyNeighbourRecyclerViewAdapter(List<Neighbour> items) {
+    public MyNeighbourRecyclerViewAdapter(List<Neighbour> items, boolean isFavorite) {
+        this.isFavorite= isFavorite;
         mNeighbours = items;
     }
 
@@ -66,11 +68,7 @@ public class MyNeighbourRecyclerViewAdapter extends RecyclerView.Adapter<MyNeigh
                 .load(neighbour.getAvatarUrl())
                 .apply(RequestOptions.circleCropTransform())
                 .into(holder.mNeighbourAvatar);
-        if (neighbour.isFavorite()) {
-            holder.mDeleteButton.setVisibility(View.GONE);
-        } else {
-            holder.mDeleteButton.setVisibility(View.VISIBLE);;
-        }
+
 
 
 
@@ -81,10 +79,10 @@ public class MyNeighbourRecyclerViewAdapter extends RecyclerView.Adapter<MyNeigh
                 EventBus.getDefault().post(new DeleteNeighbourEvent(neighbour));
             }
         });
-        if (neighbour.isFavorite()) {
+        if (isFavorite) {
             holder.mDeleteButton.setVisibility(View.GONE);
         } else {
-            holder.mDeleteButton.setVisibility(View.VISIBLE);;
+            holder.mDeleteButton.setVisibility(View.VISIBLE);
         }
         holder.itemView.setOnClickListener(new View.OnClickListener() {
             @Override
