@@ -71,12 +71,12 @@ public class NeighbourFragment extends Fragment {
     private void initList() {
         Log.d("position", isFavorite + "");
         if (isFavorite) {
-            mNeighbours = mApiService.getFavoryNeighbour();
+            mNeighbours = mApiService.getFavoritesNeighbours();
                        } else {
             mNeighbours = mApiService.getNeighbours();
 
         }
-        mRecyclerView.setAdapter(new MyNeighbourRecyclerViewAdapter(mNeighbours));
+        mRecyclerView.setAdapter(new MyNeighbourRecyclerViewAdapter(mNeighbours,isFavorite));
         }
 
 
