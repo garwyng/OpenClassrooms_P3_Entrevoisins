@@ -51,7 +51,7 @@ public class NeighbourServiceTest {
         service.createNeighbour(neighbour);
         assertTrue(neighbours.contains(neighbour));    }
     @Test
-    public void manageFavory() {
+    public void manageFavorites() {
         List<Neighbour> neighbours = service.getNeighbours();
         Neighbour neighbour = neighbours.get(0);
         service.manageFavorite(neighbour);
@@ -60,7 +60,7 @@ public class NeighbourServiceTest {
     }
 
     @Test
-    public void getFavoryNeighbour() {
+    public void getFavoritesNeighbours() {
         List<Neighbour> favoritesNeighbours = service.getFavoritesNeighbours();
         favoritesNeighbours.clear();
         service.manageFavorite(service.getNeighbours().get(0));
