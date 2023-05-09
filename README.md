@@ -4,14 +4,18 @@ Ce dépôt contient une mini-application pour le P3 du parcours Developeur Appli
 
 gradle version: 7.4.2 language program: java
 
-This application is use to network neighbours from the same neighbourhood and add them to your favorites list. You can:`n 
+This application is use to network neighbours from the same neighbourhood and add them to your favorites list. You can:
 
-List the current neighbours`n 
+List the current neighbours
 
-Add a new neighbour `n
+Add a new neighbour 
 
 Add or delete a favorite neighbour 
 
 github link:
 
 https://github.com/garwyng/OpenClassrooms_P3_Entrevoisins.git
+
+jdk: 11
+
+Version Api android: 33

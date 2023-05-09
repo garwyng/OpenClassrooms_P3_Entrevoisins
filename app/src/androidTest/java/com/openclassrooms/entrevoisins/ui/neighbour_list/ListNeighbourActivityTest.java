@@ -9,6 +9,7 @@ import static androidx.test.espresso.action.ViewActions.replaceText;
 import static androidx.test.espresso.assertion.ViewAssertions.matches;
 import static androidx.test.espresso.contrib.RecyclerViewActions.actionOnItemAtPosition;
 import static androidx.test.espresso.matcher.ViewMatchers.assertThat;
+import static androidx.test.espresso.matcher.ViewMatchers.hasMinimumChildCount;
 import static androidx.test.espresso.matcher.ViewMatchers.isDisplayed;
 import static androidx.test.espresso.matcher.ViewMatchers.withClassName;
 import static androidx.test.espresso.matcher.ViewMatchers.withContentDescription;
@@ -21,6 +22,8 @@ import static org.hamcrest.Matchers.is;
 import static org.hamcrest.core.AllOf.allOf;
 import static org.hamcrest.core.IsNull.notNullValue;
 
+import android.app.Activity;
+import android.content.Intent;
 import android.view.View;
 import android.view.ViewGroup;
 import android.view.ViewParent;
@@ -33,11 +36,14 @@ import androidx.test.rule.ActivityTestRule;
 import com.openclassrooms.entrevoisins.R;
 import com.openclassrooms.entrevoisins.model.Neighbour;
 import com.openclassrooms.entrevoisins.service.DummyNeighbourApiService;
+import com.openclassrooms.entrevoisins.utils.DeleteViewAction;
 
 import org.hamcrest.Description;
 import org.hamcrest.Matcher;
 import org.hamcrest.Matchers;
 import org.hamcrest.TypeSafeMatcher;
+import org.junit.After;
+import org.junit.AfterClass;
 import org.junit.Before;
 import org.junit.Rule;
 import org.junit.Test;
@@ -54,14 +60,20 @@ public class ListNeighbourActivityTest {
 
     @Rule
     public ActivityTestRule<ListNeighbourActivity> mActivityScenarioRule =
-            new ActivityTestRule(ListNeighbourActivity.class);
+            new ActivityTestRule(ListNeighbourActivity.class,true,false);
 
 
         @Before
     public void setUp() {
-        mActivityScenarioRule.getActivity();
-        assertThat(mActivityScenarioRule, notNullValue());
+            mActivityScenarioRule.launchActivity(new Intent());
+        Activity activity = mActivityScenarioRule.getActivity();
+        assertThat(activity, notNullValue());
     }
+    @After
+    public void tearDown() {
+        mActivityScenarioRule.finishActivity();
+        }
+
 
     @Test
     public void detailActivityTest() {
@@ -193,6 +205,34 @@ public class ListNeighbourActivityTest {
         onView(allOf(withId(R.id.list_neighbours),
                 isDisplayed())).check(withItemCount(1));
         }
+    /**
+     * We ensure that our recyclerview is displaying at least on item
+     */
+    @Test
+    public void myNeighboursList_shouldNotBeEmpty() {
+        // First scroll to the position that needs to be matched and click on it.
+        onView(allOf(withId(R.id.list_neighbours),
+                isDisplayed()))
+                .check(matches(hasMinimumChildCount(1)));
+    }
+
+    /**
+     * When we delete an item, the item is no more shown
+     */
+    @Test
+    public void myNeighboursList_deleteAction_shouldRemoveItem() {
+        size = 13; //je definit a 13 la taille car le trest précédent ajoute un voisin
+        // Given : We remove the element at position 2
+        onView(allOf(withId(R.id.list_neighbours),
+                isDisplayed())).check(withItemCount(size));
+        // When perform a click on a delete icon
+        onView(allOf(withId(R.id.list_neighbours),
+                isDisplayed()))
+                .perform(RecyclerViewActions.actionOnItemAtPosition(1, new DeleteViewAction()));
+        // Then : the number of element is 11
+        onView(allOf(withId(R.id.list_neighbours),
+                isDisplayed())).check(withItemCount(size - 1));
+    }
 
 
     private static Matcher<View> childAtPosition(
